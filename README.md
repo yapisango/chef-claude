@@ -44,7 +44,7 @@ It’s designed to demonstrate:
 
 ![Demo Screenshot](screenshot.png) <!-- Add a real screenshot if possible -->
 
-Try it live: [your-live-demo-link.com](https://your-live-demo-link.com) <!-- Add your actual deployment URL -->
+Try it live: [your-live-demo-link.com](https://scintillating-lebkuchen-824685.netlify.app/) <!-- Add your actual deployment URL -->
 
 ---
 
