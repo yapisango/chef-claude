@@ -4,12 +4,10 @@ import ClaudeRecipe from "./components/ClaudeRecipe"
 import { getRecipeFromChefClaude, getRecipeFromMistral } from "./ai"
 
 export default function Main() {
-    const [ingredients, setIngredients] = React.useState(
-        ["chicken", "all the main spices", "corn", "heavy cream", "pasta"]
-    )
+    const [ingredients, setIngredients] = React.useState([])
     const [recipe, setRecipe] = React.useState("")
+    const [inputValue, setInputValue] = React.useState("")
 
-    //To fall back automatically if Anthropic runs out
     async function getRecipe() {
         try {
             const recipeMarkdown = await getRecipeFromChefClaude(ingredients)
@@ -24,24 +22,29 @@ export default function Main() {
                 setRecipe("Sorry, we couldn't generate a recipe at the moment.")
             }
         }
+        setIngredients([]) // Clear ingredients after getting the recipe
     }
 
+    function addIngredient(e) {
+        e.preventDefault()
+        if (inputValue.trim() === "") return
 
-    function addIngredient(formData) {
-        const newIngredient = formData.get("ingredient")
-        setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+        setIngredients(prev => [...prev, inputValue.trim()])
+        setInputValue("") // clear input field
     }
 
     return (
         <main>
-            <form action={addIngredient} className="add-ingredient-form">
+            <form onSubmit={addIngredient} className="add-ingredient-form">
                 <input
                     type="text"
                     placeholder="e.g. oregano"
                     aria-label="Add ingredient"
                     name="ingredient"
+                    value={inputValue}
+                    onChange={e => setInputValue(e.target.value)}
                 />
-                <button>Add ingredient</button>
+                <button type="submit">Add ingredient</button>
             </form>
 
             {ingredients.length > 0 &&
